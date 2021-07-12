@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api_B84211_B87107.Conexion
 {
-    public class ConexionBD : DbContext
+    public class UsuarioBD : DbContext
     {
-        public ConexionBD(DbContextOptions<ConexionBD> options) : base(options)
+        public UsuarioBD(DbContextOptions<UsuarioBD> options) : base(options)
         {
 
         }

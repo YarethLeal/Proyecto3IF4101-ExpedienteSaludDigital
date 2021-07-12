@@ -28,7 +28,7 @@ namespace Api_B84211_B87107
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ConexionBD>(options =>
+            services.AddDbContext<UsuarioBD>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectionString"));
             });
