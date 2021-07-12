@@ -12,10 +12,10 @@ namespace Api_B84211_B87107.Controllers
     [ApiController]
     [Route("[controller]")]
 
-    public class ConexionController : Controller
+    public class UsuarioController : Controller
     {
-        private readonly ConexionBD context;
-        public ConexionController(ConexionBD context)
+        private readonly UsuarioBD context;
+        public UsuarioController(UsuarioBD context)
         {
             this.context = context;
         }
