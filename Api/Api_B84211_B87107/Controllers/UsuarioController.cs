@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Api_B84211_B87107.Conexion;
 using Api_B84211_B87107.Entities;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Api_B84211_B87107.Controllers
 { 
@@ -19,7 +19,7 @@ namespace Api_B84211_B87107.Controllers
         {
             this.context = context;
         }
-        // GET: api/<ValuesController>
+        // GET: /<ValuesController>
         [HttpGet]
         public IEnumerable<Usuario> Get()
         {
@@ -27,7 +27,7 @@ namespace Api_B84211_B87107.Controllers
           return context.TB_USUARIO.ToList();
         }
 
-        // GET api/<ValuesController>/5
+        // GET /<ValuesController>/5
         [HttpGet("{cedula}")]
         public Usuario Get(int cedula)
         {
@@ -35,22 +35,52 @@ namespace Api_B84211_B87107.Controllers
             return usuario;
         }
 
-        // POST api/<ValuesController>
+        // POST /<ValuesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] Usuario usuario)
         {
+            try {
+                context.TB_USUARIO.Add(usuario);
+                context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest();
+            }
         }
 
-        // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT (Actulizar) /<ValuesController>/5
+        [HttpPut("{cedula}")]
+        public ActionResult Put(int cedula, [FromBody] Usuario usuario)
         {
+            if (usuario.cedula == cedula)
+            {
+                context.Entry(usuario).State = EntityState.Modified;
+                context.SaveChanges();
+                return Ok();
+            }
+            else 
+            {
+                return BadRequest();
+            }
         }
 
         // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{cedula}")]
+        public ActionResult Delete(int cedula)
         {
+            var usuario = context.TB_USUARIO.FirstOrDefault(u => u.cedula == cedula);
+            if (usuario != null)
+            {
+                context.TB_USUARIO.Remove(usuario);
+                context.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }
