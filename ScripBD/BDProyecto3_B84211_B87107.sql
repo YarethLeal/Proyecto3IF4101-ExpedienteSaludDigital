@@ -65,6 +65,7 @@ ID INT IDENTITY(1,1) PRIMARY KEY NOT NULL
 ,FOREIGN KEY (CEDULA) REFERENCES tb_USUARIO(CEDULA)
 )
 
+--INSERT
 
 INSERT INTO [dbo].[tb_USUARIO]
            ([CEDULA]
@@ -72,3 +73,48 @@ INSERT INTO [dbo].[tb_USUARIO]
      VALUES
            (305240689
            ,'123')
+
+
+INSERT INTO [dbo].[tb_MEDICO]
+           ([CEDULA]
+           ,[CODIGO]
+           ,[CONTRASENA])
+     VALUES
+           (305000500
+           ,'Medico1'
+           ,'123')
+
+---Procedimientos almacenados
+
+
+
+CREATE PROCEDURE sp_LOGIN
+@param_CEDULA int
+,@param_CODIGO varchar(20)
+,@param_CONTRASENA varchar(20)
+
+AS 
+BEGIN
+	IF EXISTS(
+	SELECT * FROM  [dbo].[tb_MEDICO]
+	WHERE [CEDULA] = @param_CEDULA 
+	AND  [CODIGO] = @param_CODIGO
+	AND [CONTRASENA] = @param_CONTRASENA
+	)
+	BEGIN
+		SELECT 
+		1 AS EXISTE
+		,[CEDULA]
+		,[CODIGO]
+		,[CONTRASENA]
+		FROM [dbo].[tb_MEDICO]
+		WHERE [CEDULA] = @param_CEDULA
+	END
+	ELSE
+	BEGIN
+	 SELECT 0 AS EXISTE,' ' AS CEDULA,' ' AS CODIGO,' ' AS CONTRASENA
+	END
+
+END
+
+EXEC sp_LOGIN  305000500 ,'Medico1' ,'123'
