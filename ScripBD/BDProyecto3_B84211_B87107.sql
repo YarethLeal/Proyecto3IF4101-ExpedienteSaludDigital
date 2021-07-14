@@ -25,14 +25,14 @@ CEDULA INT PRIMARY KEY NOT NULL
 CREATE TABLE tb_ALERGIA (
 ID INT IDENTITY(1,1) PRIMARY KEY NOT NULL
 ,NOMBRE VARCHAR(20) NOT NULL
-,DECRIPCION VARCHAR(20) NOT NULL
+,DECRIPCION VARCHAR(100) NOT NULL
 )
 
 
 CREATE TABLE tb_VACUNA (
 ID INT IDENTITY(1,1) PRIMARY KEY NOT NULL
 ,NOMBRE VARCHAR(20) NOT NULL
-,DECRIPCION VARCHAR(20) NOT NULL
+,DECRIPCION VARCHAR(100) NOT NULL
 )
 
 CREATE TABLE tb_CITA(
@@ -84,6 +84,46 @@ INSERT INTO [dbo].[tb_MEDICO]
            ,'Medico1'
            ,'123')
 
+
+INSERT INTO [dbo].[tb_PACIENTE]
+           ([CEDULA]
+           ,[NOMBRE]
+           ,[EDAD]
+           ,[TPSANGRE]
+           ,[ESTADOCIVIL]
+           ,[TELEFONO]
+           ,[DOMICILIO])
+     VALUES
+           (305240689
+           ,'Maria Perez'
+           ,22
+           ,'O+'
+           ,'Soltera'
+           ,89632548
+           ,'Cartago,Turrialba,Turrialba')
+
+INSERT INTO [dbo].[tb_VACUNA]
+           ([NOMBRE]
+           ,[DECRIPCION])
+     VALUES
+           ('BCG','Protege contra Tuberculosis')
+		   ,
+		   ('Hepatitis B','Protege contra Hepatitis B')
+		    ,		    
+		   ('Hib tipo b','Protege contra Meningitis,Aaemophilus influenzoe')
+		    ,
+		   ('D.P.T.','Protege contra Difteria,Tosferina,Tétanos')
+		    ,
+		   ('V.O.P.','Protege contra Poliomielitis')
+		    ,
+		   ('S.R.P.','Protege contra Sarampeón,Rubéola,Paperas')
+		    ,
+		   ('D.T.','Protege contra Difteria,Tétanos')
+		   ,
+		   ('Rotavirus','Protege contra Rotavirus')
+		   ,
+		   ('Covid','Protege contra Covid')
+
 ---Procedimientos almacenados
 
 
@@ -118,3 +158,30 @@ BEGIN
 END
 
 EXEC sp_LOGIN  305000500 ,'Medico1' ,'123'
+
+--Select vacunas
+
+CREATE PROCEDURE sp_SELECT_VACUNAS
+AS 
+BEGIN
+SELECT [ID]
+      ,[NOMBRE]
+      ,[DECRIPCION]
+  FROM [dbo].[tb_VACUNA]
+
+END
+
+exec sp_SELECT_VACUNAS
+
+--Select CEDULAS
+
+CREATE PROCEDURE sp_SELECT_CEDULAS
+AS 
+BEGIN
+SELECT [CEDULA]
+      ,[NOMBRE]
+  FROM [dbo].[tb_PACIENTE]
+
+END
+
+exec sp_SELECT_CEDULAS
