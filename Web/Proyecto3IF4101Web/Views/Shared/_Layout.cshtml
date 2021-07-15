@@ -14,24 +14,40 @@
 
     <script type="text/javascript" src="~/js/jquery-3.2.1.js"></script>
     <script>
-        $(document).ready(function (e) {
-            $('#formVacuna').on('submit', (function (e) {
+        function Registrar() {
+            //var parametros = { ID_VACUNA: $('#vacuna option:selected').val(), CEDULA: $('#cedula option:selected').val(), DECRIPCION: $("#desc").val(), FECHA_APLI: $("#apli").val(), FECHA_PROX: $("#prox").val() };
+            var parametros = {
+                ID_VACUNA: $('#vacuna option:selected').val(),
+                CEDULA: $('#cedula option:selected').val(),
+                DECRIPCION: $("#desc").val(),
+                FECHA_APLI: $("#apli").val(),
+                FECHA_PROX: $("#prox").val()
+            };
 
-                event.preventDefault();
-                var formData = new FormData(this);
-                $.ajax({
-                    type: 'POST',
-                    url: '',
-                    data: formData,
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success: function (response) {
-                        $("#resultado").html(response);
-                    }
-                });
-            }));
-        });
+            $.ajax({
+                data: parametros,
+                url: '/Vacunas/RegistrarAjax',
+                type: 'POST',
+                success: function (response) {
+                    $("#resultado").html(response);
+                }
+            });
+        }
+
+        function Obtener() {
+
+            var parametros = { ID_VACUNA: $('#vacuna option:selected').val() };
+
+            $.ajax({
+                data: parametros,
+                url: '/Vacunas/ObtenerDescripcion',
+                type: 'POST',
+                success: function (response) {
+                    $("#desc").val(response);
+                }
+            });
+        }
+
     </script>
     <style>
         .sidebar {
@@ -120,7 +136,7 @@
         </nav>
     </header>
 
-    <div class="container">
+    <div class="container" style="padding-top:6%">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

@@ -5,67 +5,91 @@
 @model Proyecto3IF4101Web.Models.VacunasModel;
 
 
+<div class="container-fluid">
+    <div class="row">
 
-<h1>@ViewData["Title"]</h1>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-2 border-bottom">
 
+                <div class="col col-md-5">
+                    <legend class="text-center">Registrar Vacunas de Pacientes</legend>
+                    <form name="formVacuna" id="formVacuna">
 
-<div class="row">
-    <div class="col-md-3">
-        <form name="formVacuna" id="formVacuna">
-            <legend class="text-center">Registrar Vacunas de Pacientes</legend>
+                        <div class="col-12">
+                            <label for="paciente" class="form-label">Cedula de Paciente</label>
+                            <select class="form-select form-select mb-3" name="cedula" id="cedula" required>
+                                <option value=0>Seleccione una Cédula</option>
+                                @foreach (Pacientes temp in ViewBag.Pacientes)
+                                {
+                                    <option value="@temp.CEDULA">
+                                        @temp.CEDULA  @temp.NOMBRE
+                                    </option>
 
+                                }
+                            </select>
+                        </div>
 
-            <div class="col-12">
-                <label for="paciente" class="form-label">Cedula de Paciente</label>
-                <select class="form-select form-select mb-3" name="cedula" id="cedula" required>
-                    <option value=0>Seleccione una Cédula</option>
-                    @foreach (Pacientes temp in ViewBag.Pacientes)
+                        <div class="col-12">
+                            <label for="vacunafor" class="form-label">Vacuna</label><br />
+                            <select class="form-select form-select mb-3" name="vacuna" id="vacuna" onchange="Obtener()" required>
+                                <option value=0>Seleccione una Vacuna</option>
+                                @foreach (Vacunas temp in ViewBag.Vacunas)
+                                {
+                                    <option value="@temp.ID">
+                                        @temp.NOMBRE
+                                    </option>
+
+                                }
+
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-12  ">
+                            <label for="start">Descripción:</label>
+
+                            <textarea class="form-control" type="textArea" id="desc" name="desc">
+                            </textarea>
+
+                        </div>
+
+                        <div class="col-12 form-group ">
+                            <label for="start">Fecha de Aplicacion:</label>
+
+                            <input type="date" placeholder="yyyy-mm-dd" id="apli" name="apli">
+
+                            <label for="start">Fecha de Proxima Dosis:</label>
+
+                            <input type="date" placeholder="yyyy-mm-dd" id="prox" name="prox">
+
+                        </div>
+                        <input type="button" onclick="Registrar()" value="Registrar" class="btn btn-lg btn-primary btn-block" />
+                        <div>
+                            <span id="resultado"></span>
+                        </div>
+                    </form>
+                </div>
+
+                
+                <div class="col col-md-5 "  style="padding-left:10%">
+                    <legend class="text-center"></legend>
+                    <label for="paciente" class="form-label">Buscar Vacunas de Paciente</label>
+                    <select class="form-select form-select mb-3" name="cedula" id="cedula" required>
+                        <option value=0>Seleccione una Cédula</option>
+                        @foreach (Pacientes temp in ViewBag.Pacientes)
                         {
                             <option value="@temp.CEDULA">
-                               @temp.CEDULA + @temp.NOMBRE
+                                @temp.CEDULA  @temp.NOMBRE
                             </option>
 
                         }
-                </select>
-            </div>
-
-            <div class="col-12">
-                <label for="vacuna" class="form-label">Vacuna</label><br />
-                <select class="form-select form-select mb-3" name="vacuna" id="vacuna" required>
-                    <option value=0>Seleccione una Vacuna</option>
-                    @foreach (Vacunas temp in ViewBag.Vacunas)
-                    {
-                        <option value="@temp.ID">
-                            @temp.NOMBRE
-                        </option>
-
-                    }
-
-                    }
-                </select>
-            </div>
-
-            <div class="col-12  ">
-                <label for="start">Descripción:</label>
-
-                <input class="form-control" type="text" id="desc" name="desc">
+                    </select>
+                    <input type="button" onclick="Registrar()" value="Buscar" class="btn btn-lg btn-primary" />
+                </div>
 
             </div>
+        </main>
 
-            <div class="col-12 form-group ">
-                <label for="start">Fecha de Aplicacion:</label>
-
-                <input type="date" id="start" name="start">
-
-                <label for="start">Fecha de Proxima Dosis:</label>
-
-                <input type="date" id="end" name="end">
-
-            </div>
-            <input type="submit" value="Iniciar sesión" class="btn btn-lg btn-primary btn-block" />
-            <div>
-                <span id="resultado"></span>
-            </div>
-        </form>
     </div>
+
 </div>

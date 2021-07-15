@@ -17,7 +17,7 @@ namespace Proyecto3IF4101Web.Models
 
         public string DECRIPCION { get; set; }
         public string FECHA_APLI { get; set; }
-        public string DFECHA_PROX { get; set; }
+        public string FECHA_PROX { get; set; }
 
 
     }
