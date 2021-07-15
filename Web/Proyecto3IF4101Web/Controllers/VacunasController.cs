@@ -77,5 +77,69 @@ namespace Proyecto3IF4101Web.Controllers
             ViewBag.Pacientes = pacientes;
             return View();
         }
+
+        [HttpPost]
+        public IActionResult RegistrarAjax(VacunasModel vacunaModel)
+        {
+            string respuesta = "No Registrado";
+            if (ModelState.IsValid)
+            {
+
+                string connectionString = Configuration["ConnectionStrings:DB_Connection"];
+                var connection = new SqlConnection(connectionString);
+
+                string sqlQuery = $"exec sp_INSERT_VACUNA_PACIENTE @param_CEDULA={vacunaModel.CEDULA}," +
+                    $"@param_ID_VACUNA={vacunaModel.ID_VACUNA},@param_FECHA_APLICACION='{vacunaModel.FECHA_APLI}'" +
+                    $",@param_FECHA_PROX_DOS='{vacunaModel.FECHA_PROX}',@param_DESCRIPCION='{vacunaModel.DECRIPCION}'";
+
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    command.ExecuteReader();
+                    connection.Close();
+                    respuesta = "Aplicacion de Vacuna Registrada";
+                }
+
+            } // if
+
+            return new JsonResult(respuesta);
+        }
+
+
+        [HttpPost]
+        public IActionResult ObtenerDescripcion(VacunasModel vacunaModel)
+        {
+            string descripcion = "";
+
+            if (ModelState.IsValid)
+            {
+
+                string connectionString = Configuration["ConnectionStrings:DB_Connection"];
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string sqlQuery = $"exec sp_SELECT_VACUNA_ID @param_ID=" + vacunaModel.ID_VACUNA;
+
+                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        SqlDataReader vacunasReader = command.ExecuteReader();
+                        while (vacunasReader.Read())
+                        {
+
+                            descripcion = vacunasReader["DECRIPCION"].ToString();
+
+                        } // while
+                        connection.Close();
+                    }
+
+                }
+
+            } // if
+
+            return new JsonResult(descripcion);
+        }
+
     }
 }
