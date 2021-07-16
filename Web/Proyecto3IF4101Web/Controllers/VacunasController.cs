@@ -75,6 +75,7 @@ namespace Proyecto3IF4101Web.Controllers
 
             ViewBag.Vacunas = vacunas;
             ViewBag.Pacientes = pacientes;
+            ViewBag.vacunasModel = "";
             return View();
         }
 
@@ -90,7 +91,7 @@ namespace Proyecto3IF4101Web.Controllers
 
                 string sqlQuery = $"exec sp_INSERT_VACUNA_PACIENTE @param_CEDULA={vacunaModel.CEDULA}," +
                     $"@param_ID_VACUNA={vacunaModel.ID_VACUNA},@param_FECHA_APLICACION='{vacunaModel.FECHA_APLI}'" +
-                    $",@param_FECHA_PROX_DOS='{vacunaModel.FECHA_PROX}',@param_DESCRIPCION='{vacunaModel.DECRIPCION}'";
+                    $",@param_FECHA_PROX_DOS='{vacunaModel.FECHA_PROX}',@param_DESCRIPCION='{vacunaModel.DESCRIPCION}'";
 
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
@@ -140,6 +141,77 @@ namespace Proyecto3IF4101Web.Controllers
 
             return new JsonResult(descripcion);
         }
+
+
+
+        [HttpPost]
+        public IActionResult RecuperarDatosPaciente(VacunasModel vacunaModel)
+        {
+            List<VacunasModel> pacientes = new List<VacunasModel>();
+
+            if (ModelState.IsValid)
+            {
+
+                string connectionString = Configuration["ConnectionStrings:DB_Connection"];
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string sqlQuery = $"exec sp_SELECT_VACUNA_PACIENTE @param_CEDULA = " + vacunaModel.CEDULA;
+
+                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        SqlDataReader pacientesReader = command.ExecuteReader();
+                        while (pacientesReader.Read())
+                        {
+                            VacunasModel pacienteTemp = new VacunasModel();
+                            pacienteTemp.ID = Int32.Parse(pacientesReader["ID"].ToString());
+                            pacienteTemp.CEDULA = Int32.Parse(pacientesReader["CEDULA"].ToString());
+                            pacienteTemp.NOMBRE_VACUNA = pacientesReader["NOMBRE"].ToString();
+                            pacienteTemp.FECHA_APLI = pacientesReader["FECHA_APLICACION"].ToString();
+                            pacienteTemp.FECHA_PROX = pacientesReader["FECHA_PROX_DOS"].ToString();
+                            pacienteTemp.DESCRIPCION = pacientesReader["DESCRIPCION"].ToString();
+                            pacienteTemp.ID_VACUNA = Int32.Parse(pacientesReader["ID_VACUNA"].ToString());
+                            pacientes.Add(pacienteTemp);
+                            
+                        } // while
+                        connection.Close();
+                    }
+
+                }
+
+            } // if
+            
+            
+            return new JsonResult(pacientes);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(VacunasModel vacunaModel)
+        {
+            string respuesta = "No Registrado";
+            if (ModelState.IsValid)
+            {
+
+                string connectionString = Configuration["ConnectionStrings:DB_Connection"];
+                var connection = new SqlConnection(connectionString);
+
+                string sqlQuery = $"exec sp_DELETE_VACUNA_PACIENTE @param_ID={vacunaModel.ID}";
+
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    command.ExecuteReader();
+                    connection.Close();
+                    respuesta = "Borrado";
+                }
+
+            } // if
+
+            return new JsonResult(respuesta);
+        }
+
 
     }
 }

@@ -11,11 +11,11 @@ namespace Proyecto3IF4101Web.Models
     {
         public SelectList VacunasList { get; set; }
         public SelectList PacientesList { get; set; }
-
+        public int ID { get; set; }
         public int ID_VACUNA { get; set; }
         public int CEDULA { get; set; }
-
-        public string DECRIPCION { get; set; }
+        public string NOMBRE_VACUNA { get; set; }
+        public string DESCRIPCION { get; set; }
         public string FECHA_APLI { get; set; }
         public string FECHA_PROX { get; set; }
 
