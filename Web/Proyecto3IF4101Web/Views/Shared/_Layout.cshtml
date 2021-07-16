@@ -5,7 +5,7 @@
 
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,6 +48,51 @@
             });
         }
 
+
+        function addRowTable(data) {
+
+            //var tabla = $("#TableVacunas").DataTable();
+            for (var i = 0; i < data.length; i++) {
+               
+
+                    var elimina = "<input type=button onclick=eliminarFila(this); value=Eliminar>";
+                var fila = "<tr><td>" + Object.values(data[i])[2]+"</td><td>" + Object.values(data[i])[4] + "</td><td>" + Object.values(data[i])[5] + "</td><td>" + Object.values(data[i])[6] +
+                    "</td><td>" + Object.values(data[i])[7] + "</td><td>" + Object.values(data[i])[8] + "</td><td>" + elimina + "</td></tr>";
+                    $('#TVacunas').append(fila);
+                               
+            }
+        }
+
+        function DatosPaciente() {
+            var parametros = { CEDULA: $('#paciente option:selected').val() };
+
+            $.ajax({
+                data: parametros,
+                url: '/Vacunas/RecuperarDatosPaciente',
+                type: 'POST',
+                success: function (data) {
+                    console.log(Object.values(data[1]));
+                    console.log(Object.values(data[1])[4]);
+                    addRowTable(data);
+
+                }
+            });
+        }
+       
+        function eliminarFila(fl) {
+            var fila = fl.parentNode.parentNode;
+            var parametros = { ID: $(fila).find('td:eq(0)').html() };
+            fila.parentNode.removeChild(fila);
+            $.ajax({
+                data: parametros,
+                url: '/Vacunas/Delete',
+                type: 'POST',
+                success: function (response) {
+                    $("#borrado").html(response);
+
+                }
+            });
+        }
     </script>
     <style>
         .sidebar {
