@@ -109,6 +109,40 @@ namespace Proyecto3IF4101Web.Controllers
 
 
         [HttpPost]
+        public IActionResult Actualizar(VacunasModel vacunaModel)
+        {
+            string respuesta = "No Actualizado";
+            if (ModelState.IsValid)
+            {
+
+                string connectionString = Configuration["ConnectionStrings:DB_Connection"];
+                var connection = new SqlConnection(connectionString);
+
+                string sqlQuery = $"exec sp_UPDATE_VACUNA_PACIENTE @param_ID={vacunaModel.ID}, @param_CEDULA={vacunaModel.CEDULA}," +
+                    $"@param_ID_VACUNA={vacunaModel.ID_VACUNA},@param_FECHA_APLICACION='{vacunaModel.FECHA_APLI}'" +
+                    $",@param_FECHA_PROX_DOS='{vacunaModel.FECHA_PROX}',@param_DESCRIPCION='{vacunaModel.DESCRIPCION}'";
+
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    SqlDataReader actualizarReader = command.ExecuteReader();
+                    while (actualizarReader.Read())
+                    {
+
+                        respuesta = actualizarReader["RESULTADO"].ToString();
+
+                    } // while
+                    connection.Close();
+                }
+
+            } // if
+
+            return new JsonResult(respuesta);
+        }
+
+
+        [HttpPost]
         public IActionResult ObtenerDescripcion(VacunasModel vacunaModel)
         {
             string descripcion = "";
@@ -173,7 +207,7 @@ namespace Proyecto3IF4101Web.Controllers
                             pacienteTemp.DESCRIPCION = pacientesReader["DESCRIPCION"].ToString();
                             pacienteTemp.ID_VACUNA = Int32.Parse(pacientesReader["ID_VACUNA"].ToString());
                             pacientes.Add(pacienteTemp);
-                            
+
                         } // while
                         connection.Close();
                     }
@@ -181,8 +215,8 @@ namespace Proyecto3IF4101Web.Controllers
                 }
 
             } // if
-            
-            
+
+
             return new JsonResult(pacientes);
         }
 

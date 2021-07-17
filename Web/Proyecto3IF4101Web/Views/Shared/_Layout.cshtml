@@ -19,7 +19,7 @@
             var parametros = {
                 ID_VACUNA: $('#vacuna option:selected').val(),
                 CEDULA: $('#cedula option:selected').val(),
-                DECRIPCION: $("#desc").val(),
+                DESCRIPCION: $("#desc").val(),
                 FECHA_APLI: $("#apli").val(),
                 FECHA_PROX: $("#prox").val()
             };
@@ -53,32 +53,31 @@
 
             //var tabla = $("#TableVacunas").DataTable();
             for (var i = 0; i < data.length; i++) {
-               
 
-                    var elimina = "<input type=button onclick=eliminarFila(this); value=Eliminar>";
-                var fila = "<tr><td>" + Object.values(data[i])[2]+"</td><td>" + Object.values(data[i])[4] + "</td><td>" + Object.values(data[i])[5] + "</td><td>" + Object.values(data[i])[6] +
-                    "</td><td>" + Object.values(data[i])[7] + "</td><td>" + Object.values(data[i])[8] + "</td><td>" + elimina + "</td></tr>";
-                    $('#TVacunas').append(fila);
-                               
+                var actualizar = "<input type=button onclick=actualizarFila(this); value=Editar>";
+                var elimina = "<input type=button onclick=eliminarFila(this); value=Eliminar>";
+                var fila = "<tr><td>" + Object.values(data[i])[2] + "</td><td>" + Object.values(data[i])[4] + "</td><td>" + Object.values(data[i])[3] + "</td><td>" + Object.values(data[i])[5] + "</td><td>" + Object.values(data[i])[6] +
+                    "</td><td>" + Object.values(data[i])[7] + "</td><td>" + Object.values(data[i])[8] + "</td><td>" + elimina + "</td><td>" + actualizar + "</td></tr> ";
+                $('#TVacunas').append(fila);
+
             }
         }
 
         function DatosPaciente() {
             var parametros = { CEDULA: $('#paciente option:selected').val() };
-
+            $('#TVacunas').html("");
             $.ajax({
                 data: parametros,
                 url: '/Vacunas/RecuperarDatosPaciente',
                 type: 'POST',
                 success: function (data) {
-                    console.log(Object.values(data[1]));
-                    console.log(Object.values(data[1])[4]);
+                    //console.log(Object.values(data[1])[4]);
                     addRowTable(data);
 
                 }
             });
         }
-       
+
         function eliminarFila(fl) {
             var fila = fl.parentNode.parentNode;
             var parametros = { ID: $(fila).find('td:eq(0)').html() };
@@ -92,6 +91,74 @@
 
                 }
             });
+        }
+
+        function Actualizar(ID1) {
+            var parametros = {
+                ID: ID1,
+                ID_VACUNA: $('#vacuna option:selected').val(),
+                CEDULA: $('#cedula option:selected').val(),
+                DESCRIPCION: $("#desc").val(),
+                FECHA_APLI: $("#apli").val(),
+                FECHA_PROX: $("#prox").val()
+            };
+
+            $.ajax({
+                data: parametros,
+                url: '/Vacunas/Actualizar',
+                type: 'POST',
+                success: function (response) {
+                    $("#resultado").html(response);
+                    $('#TVacunas').html("");
+                 
+                }
+            });
+  
+           
+        }
+        function actualizarFila(fl) {
+            var fila = fl.parentNode.parentNode;
+            var estructura = " <input type=button onclick=Actualizar(" + $(fila).find('td:eq(0)').html() + ") id=act name=act value=Actualizar class='btn btn-lg btn-primary btn-block' />";
+            $("#actualizar").html(estructura);
+            $('#cedula option:selected').val($(fila).find('td:eq(1)').html());//asignarle valor
+            $('#cedula option:selected').html($(fila).find('td:eq(1)').html());//asignarle texto visible
+            $('#vacuna option:selected').val($(fila).find('td:eq(2)').html());//asignarle valor
+            $('#vacuna option:selected').html($(fila).find('td:eq(3)').html());//asignarle texto visible
+            $("#desc").val($(fila).find('td:eq(4)').html());
+            //Fecha Aplicacion
+            var fecha = $(fila).find('td:eq(5)').html();
+            var arr = fecha.split(' ');
+            var fecha1 = arr[0].split('/');
+            var dia = fecha1[2];
+            var mes = fecha1[1];
+            var año = fecha1[0];
+            //evaluar mes
+            if (parseInt(fecha1[1]) > 10) {
+                dia = "0" + dia;
+            }
+            if (parseInt(fecha1[2]) > 10) {//evaluar dia
+                mes = "0" + mes;
+            }
+
+             $("#apli").val(dia+ "-" + mes + "-" + año);
+
+            //Fecha siguiente Vacuna
+            fecha = $(fila).find('td:eq(6)').html();
+            arr = fecha.split(' ');
+            fecha1 = arr[0].split('/');
+            dia = fecha1[2];
+            mes = fecha1[1];
+            año = fecha1[0];
+            //evaluar mes
+            if (parseInt(fecha1[1]) > 10) {
+                dia = "0" + dia;
+            }
+            if (parseInt(fecha1[2]) > 10) {//evaluar dia
+                mes = "0" + mes;
+            }
+
+            $("#prox").val(dia + "-" + mes + "-" + año);
+            
         }
     </script>
     <style>
@@ -181,8 +248,8 @@
         </nav>
     </header>
 
-    <div class="container" style="padding-top:6%">
-        <main role="main" class="pb-3">
+    <div class="container-fluid" style="padding-top:6%; margin:0;">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
