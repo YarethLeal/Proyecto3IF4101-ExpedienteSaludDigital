@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "L4gY9N4XJuFscvGu0ASYudLkyUca7YmLAe/k7wU+F0tXuNS+CrdDONcDxodzBcS3CsRvNlQJRJe5hgZlfdEv5A==",
+  "dgSpecHash": "PuF71bd6SnjS96bfdIZ9OKQaC9WSSStbeW6vAnZyz+1O7IpjcOJscFikgJr+3hymEOATYNeQIUjy7+MyyYCVZw==",
   "success": true,
   "projectFilePath": "C:\\Users\\hp\\Documents\\Github\\Proyecto3IF4101\\Web\\Proyecto3IF4101Web\\Proyecto3IF4101Web.csproj",
   "expectedPackageFiles": [
@@ -118,8 +118,7 @@
     "C:\\Users\\hp\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.3\\system.threading.tasks.extensions.4.5.3.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\system.threading.timer\\4.3.0\\system.threading.timer.4.3.0.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "C:\\Users\\hp\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\hp\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.17\\microsoft.netcore.app.host.win-x64.3.1.17.nupkg.sha512"
+    "C:\\Users\\hp\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }
