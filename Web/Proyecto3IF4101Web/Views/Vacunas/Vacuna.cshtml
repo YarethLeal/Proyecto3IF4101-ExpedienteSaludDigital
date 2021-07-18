@@ -31,7 +31,7 @@
 
                         <div class="col-12">
                             <label for="vacunafor" class="form-label">Vacuna</label><br />
-                            <select class="form-select form-select mb-3" name="vacuna" id="vacuna" onchange="Obtener()" required>
+                            <select class="form-select form-select mb-3" name="vacuna" id="vacuna" onchange="ObtenerVacuna()" required>
                                 <option value=0>Seleccione una Vacuna</option>
                                 @foreach (Vacunas temp in ViewBag.Vacunas)
                                 {
@@ -65,13 +65,12 @@
                         <div class="text-center">
                             <span id="resultado"></span>
                         </div>
-                        <div class="col-12 " id="actualizar" name="actualizar">
+                        <div class="col-12" id="actualizar">
 
                         </div>
                         <br />
-
                         <div class="col-12 ">
-                            <input type="button" onclick="Registrar()" value="Registrar" class="btn btn-lg btn-primary btn-block" />
+                            <input type="button" onclick="RegistrarVacuna()" value="Registrar" class="btn btn-lg btn-primary btn-block" />
                         </div>
 
                     </form>

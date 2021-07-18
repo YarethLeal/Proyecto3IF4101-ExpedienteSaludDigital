@@ -128,7 +128,26 @@ INSERT INTO [dbo].[tb_VACUNA]
 		   ,
 		   ('Covid','Protege contra Covid')
 
----Procedimientos almacenados
+
+INSERT INTO [dbo].[tb_ALERGIA]
+           ([NOMBRE]
+           ,[DECRIPCION])
+     VALUES
+           ('Alergia a Alimentos','Picor en boca y paladar, vomito y diarrea')
+		   ,
+		   ('Alergia a Farmacos','Urticaria,Sarpullido,Hinchazon, Picor Piel y Ojos')
+		   ,
+		   ('Asma Alérgico','Dificultad Respiratoria,Opresión Torácica,Tos Seca')
+		   ,
+		   ('Dermatitis atópica','Pico,Rinitis,Engrosamiento de Piel y Piel Seca')
+		   ,
+		   ('Poliposis Nasal','Alteración del Olfato, Aummento de Mucosidad, Dificulta para Rapirar y Ronquidos')
+		   ,
+		   ('Rinitis Alérgica','Picor Nasal, Estornudos, Mucosidad y Congestión Nasal')
+		   ,
+		   ('Urticaria','Picor Intenso, Ronchas, Inflamacion de labios, parpados y lengua')
+
+---Procedimientos almacenados Vacunas
 
 
 
@@ -269,7 +288,7 @@ END
 EXEC sp_DELETE_VACUNA_PACIENTE 1
   
 
-CREATE PROCEDURE sp_UPDATE_VACUNA_PACIENTE
+ALTER PROCEDURE sp_UPDATE_VACUNA_PACIENTE
 @param_ID int
 ,@param_CEDULA int
 ,@param_ID_VACUNA int
@@ -278,11 +297,140 @@ CREATE PROCEDURE sp_UPDATE_VACUNA_PACIENTE
 ,@param_DESCRIPCION varchar(100)
 AS 
 BEGIN
-UPDATE [tb_VACUNA_PACIENTE]
-   SET [ID_VACUNA] = @param_ID_VACUNA
-      ,[FECHA_APLICACION] = @param_FECHA_APLICACION
-      ,[FECHA_PROX_DOS] = @param_FECHA_PROX_DOS
-      ,[DESCRIPCION] = @param_DESCRIPCION
- WHERE ID = @param_ID 
-	AND CEDULA = @param_CEDULA
+
+IF EXISTS(
+	SELECT * FROM  [tb_VACUNA_PACIENTE]
+	WHERE [CEDULA] = @param_CEDULA 
+	AND  ID = @param_ID 
+	)
+	BEGIN
+		UPDATE [tb_VACUNA_PACIENTE]
+		   SET [ID_VACUNA] = @param_ID_VACUNA
+			  ,[FECHA_APLICACION] = @param_FECHA_APLICACION
+			  ,[FECHA_PROX_DOS] = @param_FECHA_PROX_DOS
+			  ,[DESCRIPCION] = @param_DESCRIPCION
+		 WHERE ID = @param_ID 
+			AND CEDULA = @param_CEDULA
+	SELECT 'Actualizado' AS RESULTADO
+  END
+  ELSE
+  BEGIN
+	SELECT 'Datos incorrectos, no actualizado' AS RESULTADO
+  END
 END
+
+
+--Procedimientos almacenados de alergias
+
+CREATE PROCEDURE sp_SELECT_ALERGIAS
+AS 
+BEGIN
+SELECT [ID]
+      ,[NOMBRE]
+      ,[DECRIPCION]
+  FROM [dbo].[tb_ALERGIA]
+
+END
+
+exec sp_SELECT_ALERGIAS
+
+
+CREATE PROCEDURE sp_SELECT_ALERGIA_ID
+@param_ID int
+AS 
+BEGIN
+SELECT
+      [DECRIPCION]
+  FROM [dbo].[tb_ALERGIA]
+  WHERE [ID] = @param_ID
+
+END
+
+exec sp_SELECT_ALERGIA_ID 2
+
+
+CREATE PROCEDURE sp_INSERT_ALERGIA_PACIENTE
+@param_CEDULA int
+,@param_ID_ALERGIA int
+,@param_FECHA date
+,@param_MADICAMENTOS varchar(100)
+,@param_DESCRIPCION varchar(100)
+AS 
+BEGIN
+INSERT INTO [dbo].[tb_ALERGIA_PACIENTE]
+           ([CEDULA]
+           ,[ID_ALERGIA]
+           ,[FECHA]
+           ,[MEDICAMENTOS]
+           ,[DESCRIPCION])
+     VALUES
+           (@param_CEDULA
+           ,@param_ID_ALERGIA
+           ,@param_FECHA
+           ,@param_MADICAMENTOS
+           ,@param_DESCRIPCION)
+END
+
+
+alter PROCEDURE sp_SELECT_ALERGIA_PACIENTE
+@param_CEDULA int
+AS 
+BEGIN
+
+SELECT AP.ID
+	  ,AP.CEDULA
+	  ,AP.ID_ALERGIA
+	  ,A.NOMBRE
+	  ,AP.DESCRIPCION
+	  ,AP.FECHA
+	  ,AP.MEDICAMENTOS	  
+  FROM [dbo].[tb_ALERGIA_PACIENTE] AP
+  LEFT JOIN [dbo].[tb_ALERGIA] A
+	ON AP.ID_ALERGIA = A.ID
+	WHERE AP.CEDULA= @param_CEDULA
+END
+exec sp_SELECT_ALERGIA_PACIENTE 305240689
+
+
+CREATE PROCEDURE sp_DELETE_ALERGIA_PACIENTE
+@param_ID int
+AS 
+BEGIN
+DELETE FROM [tb_ALERGIA_PACIENTE]
+		  WHERE [ID]=@param_ID
+END
+
+EXEC sp_DELETE_ALERGIA_PACIENTE 1
+
+
+CREATE PROCEDURE sp_UPDATE_ALERGIA_PACIENTE
+@param_ID int
+,@param_CEDULA int
+,@param_ID_ALERGIA int
+,@param_FECHA date
+,@param_MEDICAMENTOS varchar(100)
+,@param_DESCRIPCION varchar(100)
+AS 
+BEGIN
+
+IF EXISTS(
+	SELECT * FROM  [tb_ALERGIA_PACIENTE]
+	WHERE [CEDULA] = @param_CEDULA 
+	AND  ID = @param_ID 
+	)
+	BEGIN
+		UPDATE [dbo].[tb_ALERGIA_PACIENTE]
+		   SET [ID_ALERGIA] = @param_ID_ALERGIA
+			  ,[FECHA] = @param_FECHA
+			  ,[MEDICAMENTOS] = @param_MEDICAMENTOS
+			  ,[DESCRIPCION] = @param_DESCRIPCION
+		 WHERE [CEDULA] = @param_CEDULA 
+		AND  ID = @param_ID 
+	SELECT 'Actualizado' AS RESULTADO
+  END
+  ELSE
+  BEGIN
+	SELECT 'Datos incorrectos, no actualizado' AS RESULTADO
+  END
+END
+
