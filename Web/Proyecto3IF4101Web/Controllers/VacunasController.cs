@@ -75,7 +75,7 @@ namespace Proyecto3IF4101Web.Controllers
 
             ViewBag.Vacunas = vacunas;
             ViewBag.Pacientes = pacientes;
-            ViewBag.vacunasModel = "";
+          
             return View();
         }
 
