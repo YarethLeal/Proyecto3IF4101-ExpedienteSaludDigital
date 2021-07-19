@@ -40,8 +40,8 @@ ID INT IDENTITY(1,1) PRIMARY KEY NOT NULL
 ,CEDULA INT NOT NULL
 ,CENTRO_SALUD VARCHAR(100) NOT NULL
 ,FECHA DATETIME NOT NULL
-,ESPECIALIDAD VARCHAR(20) NOT NULL
-,DECRIPCION VARCHAR(20) NOT NULL
+,ESPECIALIDAD VARCHAR(50) NOT NULL
+,DECRIPCION VARCHAR(100) 
 ,FOREIGN KEY (CEDULA) REFERENCES tb_USUARIO(CEDULA)
 )
 
@@ -433,4 +433,38 @@ IF EXISTS(
 	SELECT 'Datos incorrectos, no actualizado' AS RESULTADO
   END
 END
+
+
+
+--Procedimientos Citas
+
+CREATE PROCEDURE sp_INSERT_CITA_PACIENTE
+@param_CEDULA int
+,@param_CENTRO_SALUD varchar(100)
+,@param_FECHA datetime
+,@param_ESPECIALIDAD varchar(50)
+AS 
+BEGIN
+INSERT INTO [dbo].[tb_CITA]
+           ([CEDULA]
+           ,[CENTRO_SALUD]
+           ,[FECHA]
+           ,[ESPECIALIDAD])
+     VALUES
+           (@param_CEDULA
+           ,@param_CENTRO_SALUD
+           ,@param_FECHA
+           ,@param_ESPECIALIDAD)
+END
+
+EXECUTE [dbo].[sp_INSERT_CITA_PACIENTE] 
+   305240689
+  ,'Ebais 1'
+  ,'2021-07-18T23:14:15'
+  ,'Alergias'
+  
+
+
+  Select GetDate()
+
 
