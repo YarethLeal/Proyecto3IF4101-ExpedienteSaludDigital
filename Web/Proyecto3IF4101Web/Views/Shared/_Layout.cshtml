@@ -54,6 +54,26 @@
             });
         }
 
+        function RegistrarCita() {
+
+            var parametros = {
+                CEDULA: $('#cedula option:selected').val(),
+                CENTRO_SALUD: $('#centro').val(),
+                FECHA_CITA: $("#horaCita").val(),
+                ESPECIALIDAD: $("#especialidad").val(),
+                DESCRIPCION: $("#desc").val()
+            };
+
+            $.ajax({
+                data: parametros,
+                url: '/Citas/Registrar',
+                type: 'POST',
+                success: function (response) {
+                    $("#resultado").html(response);
+                }
+            });
+        }
+
         function ObtenerVacuna() {
 
             var parametros = { ID_VACUNA: $('#vacuna option:selected').val() };
@@ -141,6 +161,32 @@
             });
         }
 
+        function addRowTableCitas(data) {
+            for (var i = 0; i < data.length; i++) {
+
+                var actualizar = "<input type=button onclick=actualizarFilaCita(this); value=Editar>";
+                var elimina = "<input type=button onclick=eliminarFilaCita(this); value=Eliminar>";
+                var fila = "<tr><td>" + Object.values(data[i])[0] + "</td><td>" + Object.values(data[i])[1] + "</td><td>" + Object.values(data[i])[2] + "</td><td>" + Object.values(data[i])[3] + "</td><td>" + Object.values(data[i])[4] +
+                    "</td><td>" + Object.values(data[i])[5] + "</td><td>" + elimina + "</td><td>" + actualizar + "</td></tr> ";
+                $('#TCitas').append(fila);
+
+            }
+        }
+
+        function DatosPacienteCitas() {
+            var parametros = { CEDULA: $('#paciente option:selected').val() };
+            $('#TCitas').html("");
+            $.ajax({
+                data: parametros,
+                url: '/Citas/RecuperarDatosPaciente',
+                type: 'POST',
+                success: function (data) {
+                    addRowTableCitas(data);
+
+                }
+            });
+        }
+
         function eliminarFila(fl) {
             var fila = fl.parentNode.parentNode;
             var parametros = { ID: $(fila).find('td:eq(0)').html() };
@@ -167,6 +213,20 @@
                 success: function (response) {
                     $("#borrado").html(response);
 
+                }
+            });
+        }
+
+        function eliminarFilaCita(fl) {
+            var fila = fl.parentNode.parentNode;
+            var parametros = { ID: $(fila).find('td:eq(0)').html() };
+            fila.parentNode.removeChild(fila);
+            $.ajax({
+                data: parametros,
+                url: '/Citas/Delete',
+                type: 'POST',
+                success: function (response) {
+                    $("#borrado").html(response);
                 }
             });
         }
@@ -215,10 +275,29 @@
 
                 }
             });
-
-
         }
 
+        function ActualizarCita(ID1) {
+            var parametros = {
+                ID: ID1,
+                CEDULA: $('#cedula option:selected').val(),
+                CENTRO_SALUD: $('#centro').val(),
+                FECHA_CITA: $("#horaCita").val(),
+                ESPECIALIDAD: $("#especialidad").val(),
+                DESCRIPCION: $("#desc").val()
+            };
+
+            $.ajax({
+                data: parametros,
+                url: '/Citas/Actualizar',
+                type: 'POST',
+                success: function (response) {
+                    $("#resultado").html(response);
+                    $('#TCitas').html("");
+                    $("#desc").prop("disabled", true);
+                }
+            });
+        }
 
         function actualizarFilaAlergia(fl) {
             var fila = fl.parentNode.parentNode;
@@ -295,6 +374,24 @@
 
             $("#prox").val(dia + "-" + mes + "-" + año);
 
+        }
+
+        function actualizarFilaCita(fl) {
+            var fila = fl.parentNode.parentNode;
+            var estructura = " <input type=button onclick=ActualizarCita(" + $(fila).find('td:eq(0)').html() + ") id=act name=act value=Actualizar class='btn btn-lg btn-primary btn-block' />";
+            $("#actualizar").html(estructura);
+            $('#cedula option:selected').val($(fila).find('td:eq(1)').html());//asignarle valor
+            $('#cedula option:selected').html($(fila).find('td:eq(1)').html());//asignarle texto visible
+            $('#centro').val($(fila).find('td:eq(2)').html());
+            $("#especialidad").val($(fila).find('td:eq(4)').html());
+            $("#desc").val($(fila).find('td:eq(5)').html());
+            $("#horaCita").val($(fila).find('td:eq(3)').html());
+            $("#desc").prop("disabled", true);
+            if (new Date($(fila).find('td:eq(3)').html()).getTime() <= new Date().getTime()) {
+            //console.log(new Date());
+                //console.log(new Date($(fila).find('td:eq(3)').html()));
+                $("#desc").prop("disabled", false);
+            }
         }
     </script>
     <style>
