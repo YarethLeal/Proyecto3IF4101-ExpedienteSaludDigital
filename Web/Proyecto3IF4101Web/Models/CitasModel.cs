@@ -13,5 +13,6 @@ namespace Proyecto3IF4101Web.Models
         public DateTime FECHA_CITA { get; set; }
         public string ESPECIALIDAD { get; set; }
         public string DESCRIPCION { get; set; }
+        public string CODIGO { get; set; }
     }
 }

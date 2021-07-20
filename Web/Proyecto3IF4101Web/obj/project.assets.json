@@ -6486,19 +6486,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Yareth\\.nuget\\packages\\": {}
+    "C:\\Users\\hp\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Documents\\GitHub\\Proyecto3IF4101\\Web\\Proyecto3IF4101Web\\Proyecto3IF4101Web.csproj",
+      "projectUniqueName": "C:\\Users\\hp\\Documents\\Github\\Proyecto3IF4101\\Web\\Proyecto3IF4101Web\\Proyecto3IF4101Web.csproj",
       "projectName": "Proyecto3IF4101Web",
-      "projectPath": "D:\\Documents\\GitHub\\Proyecto3IF4101\\Web\\Proyecto3IF4101Web\\Proyecto3IF4101Web.csproj",
-      "packagesPath": "C:\\Users\\Yareth\\.nuget\\packages\\",
-      "outputPath": "D:\\Documents\\GitHub\\Proyecto3IF4101\\Web\\Proyecto3IF4101Web\\obj\\",
+      "projectPath": "C:\\Users\\hp\\Documents\\Github\\Proyecto3IF4101\\Web\\Proyecto3IF4101Web\\Proyecto3IF4101Web.csproj",
+      "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\hp\\Documents\\Github\\Proyecto3IF4101\\Web\\Proyecto3IF4101Web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Yareth\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

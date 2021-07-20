@@ -53,8 +53,8 @@ namespace Proyecto3IF4101Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                         //pattern: "{controller=Login}/{action=Login}/{id?}");
-                         pattern: "{controller=Home}/{action=Index}/{id?}");
+                         pattern: "{controller=Login}/{action=Login}/{id?}");
+
             });
         }
     }

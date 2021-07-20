@@ -98,5 +98,6 @@ namespace Proyecto3IF4101Web.Controllers
             HttpContext.Session.Clear();//Limpiar la sesión
             return RedirectToAction("Login", "Login");//Redireccionar a la vista login
         }
+
     }
 }

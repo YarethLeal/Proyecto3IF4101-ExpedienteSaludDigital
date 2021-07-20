@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Proyecto3IF4101Web.Models;
@@ -12,7 +13,8 @@ namespace Proyecto3IF4101Web.Controllers
 {
     public class CitasController : Controller
     {
-        public IConfiguration Configuration { get; }
+        
+    public IConfiguration Configuration { get; }
         public CitasController(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -60,15 +62,16 @@ namespace Proyecto3IF4101Web.Controllers
 
                 string sqlQuery = $"exec sp_INSERT_CITA_PACIENTE @param_CEDULA={citasModel.CEDULA}," +
                     $" @param_CENTRO_SALUD='{citasModel.CENTRO_SALUD}',@param_FECHA='{citasModel.FECHA_CITA}'" +
-                    $",@param_ESPECIALIDAD='{citasModel.ESPECIALIDAD}'";
+                    $",@param_ESPECIALIDAD='{citasModel.ESPECIALIDAD}',@param_CODIGO='{citasModel.CODIGO}'";
 
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     command.CommandType = CommandType.Text;
                     connection.Open();
                     command.ExecuteReader();
-                    connection.Close();
                     respuesta = "Cita de Paciente Registrada";
+                    connection.Close();
+                    
                 }
 
             } // if
