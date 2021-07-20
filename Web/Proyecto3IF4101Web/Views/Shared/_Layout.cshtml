@@ -14,6 +14,7 @@
 
     <script type="text/javascript" src="~/js/jquery-3.2.1.js"></script>
     <script>
+        var seccion = "";
         function RegistrarVacuna() {
             //var parametros = { ID_VACUNA: $('#vacuna option:selected').val(), CEDULA: $('#cedula option:selected').val(), DECRIPCION: $("#desc").val(), FECHA_APLI: $("#apli").val(), FECHA_PROX: $("#prox").val() };
             var parametros = {
@@ -55,13 +56,13 @@
         }
 
         function RegistrarCita() {
-
             var parametros = {
                 CEDULA: $('#cedula option:selected').val(),
                 CENTRO_SALUD: $('#centro').val(),
                 FECHA_CITA: $("#horaCita").val(),
                 ESPECIALIDAD: $("#especialidad").val(),
-                DESCRIPCION: $("#desc").val()
+                DESCRIPCION: $("#desc").val(),
+                CODIGO: $("#usuario").text()
             };
 
             $.ajax({
@@ -388,7 +389,7 @@
             $("#horaCita").val($(fila).find('td:eq(3)').html());
             $("#desc").prop("disabled", true);
             if (new Date($(fila).find('td:eq(3)').html()).getTime() <= new Date().getTime()) {
-            //console.log(new Date());
+                //console.log(new Date());
                 //console.log(new Date($(fila).find('td:eq(3)').html()));
                 $("#desc").prop("disabled", false);
             }
@@ -450,9 +451,6 @@
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Citas" asp-action="Cita">Gestión de Citas</a>
                         </li>
                         <li class="nav-item">
@@ -465,7 +463,7 @@
                     </ul>
                     <div class="dropdown navbar-nav px-3">
                         <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-toggle="dropdown" aria-expanded="false">
-                            <strong>USUARIO: @vUser</strong>
+                            <strong id="usuario" name="usuario">@vUser</strong>
                         </a>
                         <ul class="dropdown-menu bg-dark text-small shadow" aria-labelledby="dropdownUser1">
                             <li>

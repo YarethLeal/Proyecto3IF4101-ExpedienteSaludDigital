@@ -72,7 +72,6 @@ C:\Users\hp\Documents\Github\Proyecto3IF4101\Web\Proyecto3IF4101Web\obj\Debug\ne
 C:\Users\hp\Documents\Github\Proyecto3IF4101\Web\Proyecto3IF4101Web\obj\Debug\netcoreapp3.1\Proyecto3IF4101Web.TagHelpers.output.cache
 C:\Users\hp\Documents\Github\Proyecto3IF4101\Web\Proyecto3IF4101Web\obj\Debug\netcoreapp3.1\Proyecto3IF4101Web.RazorCoreGenerate.cache
 C:\Users\hp\Documents\Github\Proyecto3IF4101\Web\Proyecto3IF4101Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\hp\Documents\Github\Proyecto3IF4101\Web\Proyecto3IF4101Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\hp\Documents\Github\Proyecto3IF4101\Web\Proyecto3IF4101Web\obj\Debug\netcoreapp3.1\Razor\Views\Login\Login.cshtml.g.cs
 C:\Users\hp\Documents\Github\Proyecto3IF4101\Web\Proyecto3IF4101Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\hp\Documents\Github\Proyecto3IF4101\Web\Proyecto3IF4101Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
