@@ -42,8 +42,10 @@ ID INT IDENTITY(1,1) PRIMARY KEY NOT NULL
 ,FECHA DATETIME NOT NULL
 ,ESPECIALIDAD VARCHAR(50) NOT NULL
 ,DECRIPCION VARCHAR(100) 
+,CODIGO VARCHAR(20)
 ,FOREIGN KEY (CEDULA) REFERENCES tb_USUARIO(CEDULA)
 )
+
 
 CREATE TABLE tb_ALERGIA_PACIENTE(
 ID INT IDENTITY(1,1) PRIMARY KEY NOT NULL
@@ -438,23 +440,26 @@ END
 
 --Procedimientos Citas
 
-CREATE PROCEDURE sp_INSERT_CITA_PACIENTE
+Alter PROCEDURE sp_INSERT_CITA_PACIENTE
 @param_CEDULA int
 ,@param_CENTRO_SALUD varchar(100)
 ,@param_FECHA datetime
 ,@param_ESPECIALIDAD varchar(50)
+,@param_CODIGO varchar(20)
 AS 
 BEGIN
 INSERT INTO [dbo].[tb_CITA]
            ([CEDULA]
            ,[CENTRO_SALUD]
            ,[FECHA]
-           ,[ESPECIALIDAD])
+           ,[ESPECIALIDAD]
+           ,[CODIGO])
      VALUES
            (@param_CEDULA
            ,@param_CENTRO_SALUD
            ,@param_FECHA
-           ,@param_ESPECIALIDAD)
+           ,@param_ESPECIALIDAD
+		   ,@param_CODIGO)
 END
 
 EXECUTE [dbo].[sp_INSERT_CITA_PACIENTE] 
@@ -465,6 +470,73 @@ EXECUTE [dbo].[sp_INSERT_CITA_PACIENTE]
   
 
 
-  Select GetDate()
 
+  EXECUTE [dbo].[sp_INSERT_CITA_PACIENTE] 
+   305240689
+  ,'Ebais Paraiso Santiago'
+  ,'2021-07-19T02:14:15'
+  ,'Consulta General'
+  ,'Medico1'
+  
+
+CREATE PROCEDURE sp_SELECT_CITAS_PACIENTE
+@param_CEDULA int
+AS 
+BEGIN
+
+
+SELECT [ID]
+      ,[CEDULA]
+      ,[CENTRO_SALUD]
+      ,[FECHA]
+      ,[ESPECIALIDAD]
+      ,[DECRIPCION]
+  FROM [dbo].[tb_CITA]
+	WHERE CEDULA = @param_CEDULA
+END
+
+
+
+
+CREATE PROCEDURE sp_DELETE_CITA_PACIENTE
+@param_ID int
+AS 
+BEGIN
+DELETE FROM [dbo].[tb_CITA]
+		  WHERE [ID]=@param_ID
+END
+
+
+
+ALTER PROCEDURE sp_UPDATE_CITA_PACIENTE
+@param_ID int
+,@param_CEDULA int
+,@param_CENTRO_SALUD varchar(100)
+,@param_FECHA datetime
+,@param_ESPECIALIDAD varchar(50)
+,@param_DESCRIPCION varchar(100) = NULL
+AS 
+BEGIN
+
+IF EXISTS(
+	SELECT * FROM  [tb_CITA]
+	WHERE [CEDULA] = @param_CEDULA 
+	AND  ID = @param_ID 
+	)
+	BEGIN
+		UPDATE [dbo].[tb_CITA]
+		   SET [CEDULA] = @param_CEDULA
+			  ,[CENTRO_SALUD] = @param_CENTRO_SALUD
+			  ,[FECHA] = @param_FECHA
+			  ,[ESPECIALIDAD] = @param_ESPECIALIDAD 
+			  ,[DECRIPCION] = @param_DESCRIPCION
+		 WHERE [CEDULA] = @param_CEDULA
+		 AND  ID = @param_ID 
+	SELECT 'Actualizado' AS RESULTADO
+  END
+  ELSE
+  BEGIN
+	SELECT 'Datos incorrectos, no actualizado' AS RESULTADO
+  END
+END
 
