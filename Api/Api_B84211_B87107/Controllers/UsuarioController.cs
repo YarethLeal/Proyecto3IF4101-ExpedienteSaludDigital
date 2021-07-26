@@ -25,6 +25,42 @@ namespace Api_B84211_B87107.Controllers
         }
 
 
+        [HttpGet("{cedula}")]
+        public Usuario Get(int cedula)
+        {
+            Usuario usuarioInfo = new Usuario();
+            if (ModelState.IsValid)
+            {
+                string connectionString = Configuration["ConnectionStrings:ConnectionString"];
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string sqlQuery = $"exec sp_SELECT_PACIENTE @param_CEDULA={cedula}";
+                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        SqlDataReader datosReader = command.ExecuteReader();
+                       
+                        while (datosReader.Read())
+                        {
+                            usuarioInfo.cedula = Int32.Parse(datosReader["CEDULA"].ToString());
+                            usuarioInfo.nombre = datosReader["NOMBRE"].ToString();
+                            usuarioInfo.edad = Int32.Parse(datosReader["EDAD"].ToString());
+                            usuarioInfo.tpSangre = datosReader["TPSANGRE"].ToString();
+                            usuarioInfo.estado_civil = datosReader["ESTADOCIVIL"].ToString();
+                            usuarioInfo.telefono = Int32.Parse(datosReader["TELEFONO"].ToString());
+                            usuarioInfo.domicilio= datosReader["DOMICILIO"].ToString();
+
+                        } // while
+                        connection.Close();
+                    }
+                }
+            } // if
+
+            return usuarioInfo;
+        }
+
+
         [HttpGet("{cedula}/{contrasena}")]
         public int Get(int cedula, string contrasena)
         {
