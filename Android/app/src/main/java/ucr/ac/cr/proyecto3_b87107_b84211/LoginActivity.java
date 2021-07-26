@@ -38,6 +38,14 @@ public class LoginActivity extends AppCompatActivity {
                 login(edtCedula.getText().toString(),edtContrasena.getText().toString());
             }
         });
+
+        tvRegisterF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentRegister = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intentRegister);
+            }
+        });
     }
 
     private void login(String cedula,String contrasena){
