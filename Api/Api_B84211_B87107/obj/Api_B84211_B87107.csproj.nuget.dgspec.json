@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hp\\Documents\\Github\\Proyecto3IF4101\\Api\\Api_B84211_B87107\\Api_B84211_B87107.csproj": {}
+    "D:\\Documents\\GitHub\\Proyecto3IF4101\\Api\\Api_B84211_B87107\\Api_B84211_B87107.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hp\\Documents\\Github\\Proyecto3IF4101\\Api\\Api_B84211_B87107\\Api_B84211_B87107.csproj": {
+    "D:\\Documents\\GitHub\\Proyecto3IF4101\\Api\\Api_B84211_B87107\\Api_B84211_B87107.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hp\\Documents\\Github\\Proyecto3IF4101\\Api\\Api_B84211_B87107\\Api_B84211_B87107.csproj",
+        "projectUniqueName": "D:\\Documents\\GitHub\\Proyecto3IF4101\\Api\\Api_B84211_B87107\\Api_B84211_B87107.csproj",
         "projectName": "Api_B84211_B87107",
-        "projectPath": "C:\\Users\\hp\\Documents\\Github\\Proyecto3IF4101\\Api\\Api_B84211_B87107\\Api_B84211_B87107.csproj",
-        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hp\\Documents\\Github\\Proyecto3IF4101\\Api\\Api_B84211_B87107\\obj\\",
+        "projectPath": "D:\\Documents\\GitHub\\Proyecto3IF4101\\Api\\Api_B84211_B87107\\Api_B84211_B87107.csproj",
+        "packagesPath": "C:\\Users\\Yareth\\.nuget\\packages\\",
+        "outputPath": "D:\\Documents\\GitHub\\Proyecto3IF4101\\Api\\Api_B84211_B87107\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yareth\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
