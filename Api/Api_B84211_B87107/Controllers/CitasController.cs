@@ -26,7 +26,7 @@ namespace Api_B84211_B87107.Controllers
 
         [HttpGet("{cedula}")]
         public IEnumerable<Citas> Get(int cedula)
-        {
+        { 
             List<Citas> citas = new List<Citas>();
             if (ModelState.IsValid)
             {

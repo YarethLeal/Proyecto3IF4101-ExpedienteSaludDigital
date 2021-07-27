@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Api_B84211_B87107.Controllers
-{ 
+{
     [ApiController]
     [Route("[controller]")]
 
@@ -40,7 +40,7 @@ namespace Api_B84211_B87107.Controllers
                         command.CommandType = CommandType.Text;
                         connection.Open();
                         SqlDataReader datosReader = command.ExecuteReader();
-                       
+
                         while (datosReader.Read())
                         {
                             usuarioInfo.cedula = Int32.Parse(datosReader["CEDULA"].ToString());
@@ -49,7 +49,7 @@ namespace Api_B84211_B87107.Controllers
                             usuarioInfo.tpSangre = datosReader["TPSANGRE"].ToString();
                             usuarioInfo.estado_civil = datosReader["ESTADOCIVIL"].ToString();
                             usuarioInfo.telefono = Int32.Parse(datosReader["TELEFONO"].ToString());
-                            usuarioInfo.domicilio= datosReader["DOMICILIO"].ToString();
+                            usuarioInfo.domicilio = datosReader["DOMICILIO"].ToString();
 
                         } // while
                         connection.Close();
@@ -79,7 +79,7 @@ namespace Api_B84211_B87107.Controllers
                         while (verificarReader.Read())
                         {
                             verificar = Int32.Parse(verificarReader["EXISTE"].ToString());
-                           
+
                         } // while
                         connection.Close();
                     }
@@ -90,16 +90,16 @@ namespace Api_B84211_B87107.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult Post([FromBody] Usuario usuario)
+        [HttpGet("{cedula}/{contrasena}/{num}")]
+        public ActionResult Get(int cedula, string contrasena,int num)
         {
-            string verificar = "";
+            string verificar = "Error";
             if (ModelState.IsValid)
             {
                 string connectionString = Configuration["ConnectionStrings:ConnectionString"];
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    string sqlQuery = $"exec sp_REGISTRAR @param_CEDULA={usuario.cedula}, @param_CONTRASENA='{usuario.contrasena}'";
+                    string sqlQuery = $"exec sp_REGISTRAR @param_CEDULA={cedula}, @param_CONTRASENA='{contrasena}'";
                     using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                     {
                         command.CommandType = CommandType.Text;
@@ -108,22 +108,51 @@ namespace Api_B84211_B87107.Controllers
                         while (verificarReader.Read())
                         {
                             verificar = verificarReader["RESULTADO"].ToString();
-                            return Ok(verificar);
+
 
                         } // while
                         connection.Close();
                     }
                 }
             } // if
-
-            return BadRequest();
+            
+            return new JsonResult(verificar);
         }
+
+        //[HttpPost]
+        //public async Task<string> Post([FromBody] Usuario usuario)
+        //{
+        //    string verificar = "Error";
+        //    if (ModelState.IsValid)
+        //    {
+        //        string connectionString = Configuration["ConnectionStrings:ConnectionString"];
+        //        using (SqlConnection connection = new SqlConnection(connectionString))
+        //        {
+        //            string sqlQuery = $"exec sp_REGISTRAR @param_CEDULA={usuario.cedula}, @param_CONTRASENA='{usuario.contrasena}'";
+        //            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+        //            {
+        //                command.CommandType = CommandType.Text;
+        //                connection.Open();
+        //                SqlDataReader verificarReader = command.ExecuteReader();
+        //                while (verificarReader.Read())
+        //                {
+        //                    verificar = verificarReader["RESULTADO"].ToString();
+
+
+        //                } // while
+        //                connection.Close();
+        //            }
+        //        }
+        //    } // if
+
+        //    return verificar;
+        //}
 
         // PUT (Actulizar) /<ValuesController>/5
         [HttpPut("{cedula}")]
         public ActionResult Put(int cedula, [FromBody] Usuario usuario)
         {
-            
+
             if (ModelState.IsValid)
             {
                 string connectionString = Configuration["ConnectionStrings:ConnectionString"];
@@ -136,7 +165,7 @@ namespace Api_B84211_B87107.Controllers
                         command.CommandType = CommandType.Text;
                         connection.Open();
                         command.ExecuteReader();
-                        connection.Close(); 
+                        connection.Close();
                         return Ok();
                     }
                 }
