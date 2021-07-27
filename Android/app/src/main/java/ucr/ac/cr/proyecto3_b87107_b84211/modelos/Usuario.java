@@ -1,14 +1,19 @@
 package ucr.ac.cr.proyecto3_b87107_b84211.modelos;
 
 public class Usuario {
-    private int cedula;
+    private Integer cedula;
     private String contrasena;
     private String nombre;
-    private int edad;
+    private Integer edad;
     private String tpSangre;
     private String estado_civil;
-    private int telefono;
+    private Integer telefono;
     private String domicilio;
+
+    public Usuario(Integer cedula, String contrasena) {
+        this.cedula = cedula;
+        this.contrasena = contrasena;
+    }
 
     public int getCedula() {
         return cedula;
