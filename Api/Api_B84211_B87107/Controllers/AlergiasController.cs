@@ -25,7 +25,7 @@ namespace Api_B84211_B87107.Controllers
 
 
         [HttpGet("{cedula}")]
-        public IEnumerable<Alergias> Get(int cedula)
+        public List<Alergias> Get(int cedula)
         {
             List<Alergias> alergias = new List<Alergias>();
             if (ModelState.IsValid)

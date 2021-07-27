@@ -635,3 +635,14 @@ UPDATE [dbo].[tb_PACIENTE]
       ,[DOMICILIO] = @param_DOMICILIO
    WHERE [CEDULA]=@param_CEDULA
  END
+
+
+ 
+INSERT INTO [dbo].[TB_USUARIO]
+           ([CEDULA]
+           ,[CONTRASENA]
+           ,[REGISTRADO])
+     VALUES
+           (305250075
+           ,''
+           ,0)

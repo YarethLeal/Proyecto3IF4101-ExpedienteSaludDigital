@@ -9,4 +9,8 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Contraseña invalida</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="detalles">"Mas Detalles"</string>
+    <string name="ocultar_detalles">"Ocultar Detalles"</string>
+    <string name="medi">"Medicamentos:"</string>
+    <string name="desc">"Descripcion:"</string>
 </resources>
