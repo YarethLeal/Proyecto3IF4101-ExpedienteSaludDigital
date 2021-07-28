@@ -10,6 +10,12 @@ public class Usuario {
     private Integer telefono;
     private String domicilio;
 
+    public Usuario(String estado_civil, Integer telefono, String domicilio) {
+        this.estado_civil = estado_civil;
+        this.telefono = telefono;
+        this.domicilio = domicilio;
+    }
+
     public Usuario(Integer cedula, String contrasena) {
         this.cedula = cedula;
         this.contrasena = contrasena;
