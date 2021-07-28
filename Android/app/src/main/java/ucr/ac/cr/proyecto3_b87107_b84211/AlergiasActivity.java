@@ -2,6 +2,8 @@ package ucr.ac.cr.proyecto3_b87107_b84211;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,8 @@ import ucr.ac.cr.proyecto3_b87107_b84211.modelos.Vacunas;
 
 public class AlergiasActivity extends AppCompatActivity {
     TextView cedulaId;
+    ImageButton btnSalir;
+
     private RecyclerView listaAlergiasRecycler;
     private List<Alergias> alergias = new ArrayList<>();
 
@@ -34,14 +38,20 @@ public class AlergiasActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String cedulaUser = bundle.getString("userId");
-
+        btnSalir=findViewById(R.id.exitBtn);
         cedulaId=findViewById(R.id.txtCedula);
         cedulaId.setText(cedulaUser);
         listaAlergiasRecycler = findViewById(R.id.AlergiasRecycle);
         listaAlergiasRecycler.setLayoutManager(new LinearLayoutManager(AlergiasActivity.this));
         obtenerAlergias(cedulaUser);
 
-
+        btnSalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentLogin = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intentLogin);
+            }
+        });
 
     }
 

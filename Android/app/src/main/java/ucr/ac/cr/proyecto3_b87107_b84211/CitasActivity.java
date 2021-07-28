@@ -1,6 +1,9 @@
 package ucr.ac.cr.proyecto3_b87107_b84211;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,8 @@ import ucr.ac.cr.proyecto3_b87107_b84211.modelos.Citas;
 
 public class CitasActivity extends AppCompatActivity {
     TextView cedulaId;
+    ImageButton btnSalir;
+
     private RecyclerView listaCitasRecycler;
     private List<Citas> citas = new ArrayList<>();
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +37,20 @@ public class CitasActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String cedulaUser = bundle.getString("userId");
-
+        btnSalir=findViewById(R.id.exitBtn);
         cedulaId=findViewById(R.id.txtCedula);
         cedulaId.setText(cedulaUser);
         listaCitasRecycler = findViewById(R.id.CitasRecycle);
         listaCitasRecycler.setLayoutManager(new LinearLayoutManager(CitasActivity.this));
         obtenerCitas(cedulaUser);
+
+        btnSalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentLogin = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intentLogin);
+            }
+        });
     }
 
 
