@@ -6,7 +6,7 @@ public class Citas {
     private String centro_salud;
     private String fecha;
     private String especialidad;
-    private String descripción;
+    private String descripcion;
     private String codigo ;
 
     public int getId() {
@@ -49,12 +49,12 @@ public class Citas {
         this.especialidad = especialidad;
     }
 
-    public String getDescripción() {
-        return descripción;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescripción(String descripción) {
-        this.descripción = descripción;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public String getCodigo() {

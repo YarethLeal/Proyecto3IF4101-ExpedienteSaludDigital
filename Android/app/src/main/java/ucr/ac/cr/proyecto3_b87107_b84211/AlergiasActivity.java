@@ -39,12 +39,8 @@ public class AlergiasActivity extends AppCompatActivity {
         cedulaId.setText(cedulaUser);
         listaAlergiasRecycler = findViewById(R.id.AlergiasRecycle);
         listaAlergiasRecycler.setLayoutManager(new LinearLayoutManager(AlergiasActivity.this));
-        //alergias=obtenerAlergias(cedulaUser);
         obtenerAlergias(cedulaUser);
-        //Toast.makeText(AlergiasActivity.this,alergias.get(1).getAlergia(),Toast.LENGTH_SHORT).show();
-        //ListaAlergiasAdapter adapter = new ListaAlergiasAdapter(alergias);
-        //listaAlergiasRecycler.setLayoutManager(new LinearLayoutManager(this));
-       // listaAlergiasRecycler.setAdapter(adapter);
+
 
 
     }
@@ -63,7 +59,6 @@ public class AlergiasActivity extends AppCompatActivity {
                 try {
                     if(response.isSuccessful()){
                         alergias=response.body();
-                        Toast.makeText(AlergiasActivity.this,"num: "+alergias.size(),Toast.LENGTH_SHORT).show();
                         ListaAlergiasAdapter adapter = new ListaAlergiasAdapter(alergias,AlergiasActivity.this);
                         listaAlergiasRecycler.setAdapter(adapter);
 

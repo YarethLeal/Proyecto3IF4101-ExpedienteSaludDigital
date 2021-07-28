@@ -10,39 +10,40 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ucr.ac.cr.proyecto3_b87107_b84211.R;
 import ucr.ac.cr.proyecto3_b87107_b84211.modelos.Alergias;
+import ucr.ac.cr.proyecto3_b87107_b84211.modelos.Citas;
 
-public class ListaAlergiasAdapter extends RecyclerView.Adapter<ItemAlergiaViewHolder> {
-    private List<Alergias> listaAlergias;
+
+public class ListaCitasAdaptar extends RecyclerView.Adapter<ItemCitasViewHolder> {
+    private List<Citas> listaCitas;
     private Context context;
     private Boolean contedorMasDetalles=false;
 
-    public ListaAlergiasAdapter(List<Alergias> listaAlergias,Context context) {
-        this.listaAlergias = listaAlergias;
+    public ListaCitasAdaptar(List<Citas> listaCitas, Context context) {
+        this.listaCitas = listaCitas;
         this.context =context;
     }
-
     @NonNull
     @Override
-    public ItemAlergiaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemCitasViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemLista = inflater.inflate(R.layout.item_alergia, parent, false);
-        ItemAlergiaViewHolder viewHolder = new ItemAlergiaViewHolder(itemLista);
+        View itemLista = inflater.inflate(R.layout.item_citas, parent, false);
+        ItemCitasViewHolder viewHolder = new ItemCitasViewHolder(itemLista);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemAlergiaViewHolder holder, int position) {
-        final Alergias alergiaActual = listaAlergias.get(position);
-        holder.alergia.setText(alergiaActual.getAlergia());
-        holder.fecha.setText(alergiaActual.getFecha());
-        holder.medicamentos.setText(alergiaActual.getMedicamentos());
-        holder.descripcion.setText(alergiaActual.getDescripcion());
+    public void onBindViewHolder(@NonNull ItemCitasViewHolder holder, int position) {
+        final Citas citasActual = listaCitas.get(position);
+        holder.fecha.setText(citasActual.getFecha());
+        holder.centro_salud.setText(citasActual.getCentro_salud());
+        holder.especialidad.setText(citasActual.getEspecialidad());
+        holder.descripcion.setText(citasActual.getDescripcion());
+        holder.medico.setText(citasActual.getCodigo());
 
         holder.verDetalles.setOnClickListener(view->{
             if (contedorMasDetalles==false)
@@ -58,11 +59,10 @@ public class ListaAlergiasAdapter extends RecyclerView.Adapter<ItemAlergiaViewHo
 
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return listaAlergias.size();
+        return listaCitas.size();
     }
 }
