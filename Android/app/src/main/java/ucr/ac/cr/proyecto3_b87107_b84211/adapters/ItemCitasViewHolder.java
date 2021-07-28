@@ -11,22 +11,24 @@ import org.jetbrains.annotations.NotNull;
 
 import ucr.ac.cr.proyecto3_b87107_b84211.R;
 
-public class ItemAlergiaViewHolder extends RecyclerView.ViewHolder {
-    TextView alergia;
+public class ItemCitasViewHolder extends RecyclerView.ViewHolder{
     TextView fecha;
+    TextView centro_salud;
     ConstraintLayout layoutDetalles;
-    TextView medicamentos;
+    TextView especialidad;
     TextView descripcion;
+    TextView medico;
     TextView verDetalles;
 
-    public ItemAlergiaViewHolder(@NonNull @NotNull View itemView) {
-        super(itemView);
-        alergia= itemView.findViewById(R.id.txtAlergia);
-        fecha= itemView.findViewById(R.id.txtFecha);
-        layoutDetalles=itemView.findViewById(R.id.itemMasDetalles);
-        medicamentos=itemView.findViewById(R.id.txtMedicamentosAlergiaValor);
-        descripcion=itemView.findViewById(R.id.txtDescAlergiaValor);
-        verDetalles=itemView.findViewById(R.id.txtDetalles);
 
+    public ItemCitasViewHolder(@NonNull @NotNull View itemView) {
+        super(itemView);
+        fecha= itemView.findViewById(R.id.txtFecha);
+        centro_salud= itemView.findViewById(R.id.txtCentro_Salud);
+        layoutDetalles=itemView.findViewById(R.id.itemMasDetalles);
+        especialidad=itemView.findViewById(R.id.txtEspecialidadValor);
+        descripcion=itemView.findViewById(R.id.txtDescValor);
+        medico=itemView.findViewById(R.id.txtMedicoValor);
+        verDetalles=itemView.findViewById(R.id.txtDetalles);
     }
 }

@@ -18,12 +18,13 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="79dp"
-            android:layout_height="49dp"
+            android:layout_width="82dp"
+            android:layout_height="68dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/ic_user"
+            tools:srcCompat="@drawable/ic_user" />
 
         <TextView
             android:id="@+id/txtCedula"
@@ -39,20 +40,23 @@
 
         <ImageButton
             android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
+            android:layout_width="50dp"
+            android:layout_height="51dp"
+            android:layout_marginEnd="68dp"
+            android:layout_marginRight="68dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.407"
-            app:srcCompat="@android:drawable/ic_dialog_dialer" />
+            app:layout_constraintVertical_bias="0.518"
+            app:srcCompat="@android:drawable/ic_lock_power_off"
+            tools:srcCompat="@android:drawable/ic_lock_power_off" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/CitasRecycle"
         android:layout_width="409dp"
         android:layout_height="651dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
