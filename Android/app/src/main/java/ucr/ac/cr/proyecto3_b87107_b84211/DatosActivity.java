@@ -35,17 +35,18 @@ public class DatosActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String cedulaUser = bundle.getString("userId");
         //Declarar
-        cedula=findViewById(R.id.usuarioId);
+        cedula=findViewById(R.id.txtCedula);
         nombre = findViewById(R.id.txtNombre);
         edad = findViewById(R.id.txtEdad);
         tpSangre = findViewById(R.id.txtSangre);
         estado = findViewById(R.id.txtEstado);
         telefono = findViewById(R.id.txtTelefono);
         domicilio = findViewById(R.id.txtDireccion);
-        btnEditar = findViewById(R.id.txtUpdate);
+        btnEditar = findViewById(R.id.btnUpdate);
         btnSalir = findViewById(R.id.exitBtn);
 
-        datosUsuario();
+        cedula.setText(cedulaUser);
+        datosUsuario(cedulaUser);
         btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,11 +61,11 @@ public class DatosActivity extends AppCompatActivity {
             }
         });
     }
-    private void datosUsuario(){
+    private void datosUsuario(String cedula){
         Retrofit retrofit=new Retrofit.Builder().baseUrl("https://api-b87107-b84211.azurewebsites.net/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         UsuarioAPI usuarioAPI=retrofit.create(UsuarioAPI.class);
-        Call<Usuario> call=usuarioAPI.datosUser(cedula.getText().toString());
+        Call<Usuario> call=usuarioAPI.datosUser(cedula);
         call.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
@@ -72,10 +73,10 @@ public class DatosActivity extends AppCompatActivity {
                     if(response.isSuccessful()){
                         Usuario respuesta = response.body();
                         nombre.setText(respuesta.getNombre());
-                        edad.setText(respuesta.getEdad());
+                        edad.setText(String.valueOf(respuesta.getEdad()));
                         tpSangre.setText(respuesta.getTpSangre());
                         estado.setText(respuesta.getEstado_civil());
-                        telefono.setText(respuesta.getTelefono());
+                        telefono.setText(String.valueOf(respuesta.getTelefono()));
                         domicilio.setText(respuesta.getDomicilio());
                     }
                 }catch (Exception ex){
@@ -84,10 +85,10 @@ public class DatosActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Usuario> call, Throwable t) {
+           public void onFailure(Call<Usuario> call, Throwable t) {
                 Toast.makeText(DatosActivity.this,"Error de conexion",Toast.LENGTH_SHORT).show();
             }
-        });
+       });
     }
     private void actualizaDatos(){
         Retrofit retrofit=new Retrofit.Builder().baseUrl("https://api-b87107-b84211.azurewebsites.net/")
@@ -101,7 +102,7 @@ public class DatosActivity extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 try {
                     if(response.isSuccessful()){
-                        datosUsuario();
+                        datosUsuario(cedula.getText().toString());
                     }
                 }catch (Exception ex){
                     Toast.makeText(DatosActivity.this,ex.getMessage(),Toast.LENGTH_SHORT).show();
